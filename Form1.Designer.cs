@@ -119,7 +119,7 @@ namespace RI_Mod_Manager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 436);
+            this.ClientSize = new System.Drawing.Size(725, 437);
             this.Controls.Add(this.cbClose);
             this.Controls.Add(this.btnLaunch);
             this.Controls.Add(this.btnEnable);
@@ -128,6 +128,8 @@ namespace RI_Mod_Manager
             this.Controls.Add(this.lbEnabled);
             this.Controls.Add(this.lbDisabled);
             this.Controls.Add(this.btnDisable);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "RI Mod Manager";
             this.Load += new System.EventHandler(this.Form1_Load);
