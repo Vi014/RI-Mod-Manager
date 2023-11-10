@@ -37,6 +37,8 @@ namespace RI_Mod_Manager
             this.btnDisable = new System.Windows.Forms.Button();
             this.btnLaunch = new System.Windows.Forms.Button();
             this.cbClose = new System.Windows.Forms.CheckBox();
+            this.btnReviver = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // lbDisabled
@@ -115,11 +117,31 @@ namespace RI_Mod_Manager
             this.cbClose.Text = "Close upon launching";
             this.cbClose.UseVisualStyleBackColor = true;
             // 
+            // btnReviver
+            // 
+            this.btnReviver.Location = new System.Drawing.Point(12, 405);
+            this.btnReviver.Name = "btnReviver";
+            this.btnReviver.Size = new System.Drawing.Size(97, 23);
+            this.btnReviver.TabIndex = 6;
+            this.btnReviver.Text = "Revive catalog";
+            this.btnReviver.UseVisualStyleBackColor = true;
+            this.btnReviver.Click += new System.EventHandler(this.btnReviver_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(115, 405);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(100, 23);
+            this.progressBar1.TabIndex = 7;
+            this.progressBar1.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(725, 437);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.btnReviver);
             this.Controls.Add(this.cbClose);
             this.Controls.Add(this.btnLaunch);
             this.Controls.Add(this.btnEnable);
@@ -148,6 +170,8 @@ namespace RI_Mod_Manager
         private System.Windows.Forms.Button btnDisable;
         private System.Windows.Forms.Button btnLaunch;
         private System.Windows.Forms.CheckBox cbClose;
+        private System.Windows.Forms.Button btnReviver;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
