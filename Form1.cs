@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
 using System.Net;
+using System.Reflection;
 
 namespace RI_Mod_Manager
 {
@@ -146,53 +147,21 @@ namespace RI_Mod_Manager
                 if (System.Environment.OSVersion.Version.Major >= 10)
                 {
                     File.Copy(".\\libcurl.dll", ".\\libcurl.dll.bak", true);
-                    File.Delete(".\\libcurl.dll");
+                    File.WriteAllBytes("./libcurl.dll", RI_Mod_Manager.Properties.Resources.libcurl);
 
-                    try
-                    {
-                        progressBar1.Visible = true;
+                    for (int i = 0; i < lines.Length; i++)
+                        if (lines[i].Length >= 11)
+                            if (lines[i].Substring(0, 11) == "Catalog URL")
+                                lines[i] = "Catalog URL=https://www.ricochetuniverse.com/gateway/catalog.php";
 
-                        using (var client = new WebClient())
-                        {
-                            client.DownloadProgressChanged += wc_DownloadProgressChanged;
-                            client.DownloadFileAsync(new System.Uri("https://www.ricochetuniverse.com/misc/libcurl.dll"), "libcurl.dll");
-                        }
-
-                        for (int i = 0; i < lines.Length; i++)
-                        {
-                            if (lines[i].Length >= 11)
-                                if (lines[i].Substring(0, 11) == "Catalog URL")
-                                    lines[i] = "Catalog URL=https://www.ricochetuniverse.com/gateway/catalog.php";
-                        }
-
-                        File.WriteAllLines("data2.dat", lines);
-                        progressBar1.Visible = false;
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Unable to download new version of libcurl.dll! Data2 will be patched to connect to the http version of Ricochet Universe instead of https.");
-                        File.Move(".\\libcurl.dll.bak", ".\\libcurl.dll");
-
-                        for (int i = 0; i < lines.Length; i++)
-                        {
-                            if (lines[i].Length >= 11)
-                                if (lines[i].Substring(0, 11) == "Catalog URL")
-                                    lines[i] = "Catalog URL=http://www.ricochetuniverse.com/gateway/catalog.php";
-                        }
-
-                        File.WriteAllLines("data2.dat", lines);
-
-                        progressBar1.Visible = false;
-                    }
+                    File.WriteAllLines("data2.dat", lines);
                 }
                 else
                 {
                     for (int i = 0; i < lines.Length; i++)
-                    {
                         if (lines[i].Length >= 11)
                             if (lines[i].Substring(0, 11) == "Catalog URL")
                                 lines[i] = "Catalog URL=http://www.ricochetuniverse.com/gateway/catalog.php";
-                    }
 
                     File.WriteAllLines("data2.dat", lines);
                 }
@@ -203,11 +172,6 @@ namespace RI_Mod_Manager
             {
                 MessageBox.Show($"{ex}");
             }
-        }
-
-        void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            progressBar1.Value = e.ProgressPercentage;
         }
         #endregion
 

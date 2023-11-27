@@ -39,7 +39,6 @@ namespace RI_Mod_Manager
             this.btnLaunch = new System.Windows.Forms.Button();
             this.cbClose = new System.Windows.Forms.CheckBox();
             this.btnReviver = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.btnUp = new System.Windows.Forms.Button();
             this.btnDown = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -134,14 +133,6 @@ namespace RI_Mod_Manager
             this.btnReviver.UseVisualStyleBackColor = true;
             this.btnReviver.Click += new System.EventHandler(this.btnReviver_Click);
             // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(115, 405);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(100, 23);
-            this.progressBar1.TabIndex = 0;
-            this.progressBar1.Visible = false;
-            // 
             // btnUp
             // 
             this.btnUp.Location = new System.Drawing.Point(716, 116);
@@ -203,7 +194,6 @@ namespace RI_Mod_Manager
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnDown);
             this.Controls.Add(this.btnUp);
-            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btnReviver);
             this.Controls.Add(this.cbClose);
             this.Controls.Add(this.btnLaunch);
@@ -237,7 +227,6 @@ namespace RI_Mod_Manager
         private System.Windows.Forms.Button btnLaunch;
         private System.Windows.Forms.CheckBox cbClose;
         private System.Windows.Forms.Button btnReviver;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Button btnUp;
         private System.Windows.Forms.Button btnDown;
         private System.Windows.Forms.Label label3;

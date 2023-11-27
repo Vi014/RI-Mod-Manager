@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="15.ico" />
+    <None Include="Resources\libcurl.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -59,5 +59,15 @@ namespace RI_Mod_Manager.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] libcurl {
+            get {
+                object obj = ResourceManager.GetObject("libcurl", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
