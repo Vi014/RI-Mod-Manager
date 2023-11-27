@@ -1,0 +1,33 @@
+name: Build app
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: windows-2019
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v1
+
+      - name: Restore packages
+        run: nuget restore "RI Mod Manager.sln"
+
+      - name: Build solution
+        run: msbuild "RI Mod Manager.sln" -t:rebuild -property:Configuration=Release
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: RI Mod Manager
+          path: bin\Release
