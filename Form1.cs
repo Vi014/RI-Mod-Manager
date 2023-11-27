@@ -27,6 +27,17 @@ namespace RI_Mod_Manager
             generateEnabled();
             generateDisabled();
 
+            var patched = false;
+            foreach (var line in File.ReadAllLines("data2.dat"))
+                if (line == "Catalog URL=https://www.ricochetuniverse.com/gateway/catalog.php" || line == "Catalog URL=http://www.ricochetuniverse.com/gateway/catalog.php")
+                    patched = true;
+            if(patched)
+            {
+                btnReviver.Enabled = false;
+                label4.Visible = true;
+            }
+
+
             if (File.Exists("modmanager.cfg"))
             {
                 if (File.ReadAllText("modmanager.cfg") == "y")
@@ -137,7 +148,6 @@ namespace RI_Mod_Manager
             }
         }
 
-        #region reviver
         private void btnReviver_Click(object sender, EventArgs e)
         {
             try
@@ -168,12 +178,11 @@ namespace RI_Mod_Manager
 
                 MessageBox.Show("Patching done!");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show($"{ex}");
             }
         }
-        #endregion
 
         #region drag and drop
         private void Form1_DragEnter(object sender, DragEventArgs e)

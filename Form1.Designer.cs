@@ -44,6 +44,7 @@ namespace RI_Mod_Manager
             this.label3 = new System.Windows.Forms.Label();
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnInstall = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbDisabled
@@ -183,12 +184,23 @@ namespace RI_Mod_Manager
             this.btnInstall.UseVisualStyleBackColor = true;
             this.btnInstall.Click += new System.EventHandler(this.btnInstall_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(115, 410);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(125, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Catalog already patched.";
+            this.label4.Visible = false;
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 437);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnInstall);
             this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.label3);
@@ -232,6 +244,7 @@ namespace RI_Mod_Manager
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnInstall;
+        private System.Windows.Forms.Label label4;
     }
 }
 
