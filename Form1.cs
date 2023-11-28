@@ -27,10 +27,14 @@ namespace RI_Mod_Manager
             generateEnabled();
             generateDisabled();
 
+
+
             var patched = false;
+
             foreach (var line in File.ReadAllLines("data2.dat"))
                 if (line == "Catalog URL=https://www.ricochetuniverse.com/gateway/catalog.php" || line == "Catalog URL=http://www.ricochetuniverse.com/gateway/catalog.php")
                     patched = true;
+
             if(patched)
             {
                 btnReviver.Enabled = false;
@@ -38,16 +42,18 @@ namespace RI_Mod_Manager
             }
 
 
-            if (File.Exists("modmanager.cfg"))
+
+            try
             {
-                if (File.ReadAllText("modmanager.cfg") == "y")
-                {
-                    cbClose.Checked = true;
-                }
+                if (File.Exists("modmanager.cfg"))
+                    if (File.ReadAllText("modmanager.cfg") == "y")
+                        cbClose.Checked = true;
+                    else
+                        File.AppendAllText("modmanager.cfg", "n");
             }
-            else
+            catch (Exception ex)
             {
-                File.AppendAllText("modmanager.cfg", "n");
+                MessageBox.Show($"An error has occurred while loading the program's settings. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
             }
         }
 
@@ -57,22 +63,29 @@ namespace RI_Mod_Manager
 
             string[] enabled = Directory.GetFiles(".", "*.red", SearchOption.TopDirectoryOnly);
 
-            for (int i = 0; i < enabled.Length; i++)
+            try
             {
-                var modName = enabled[i];
-                var counter = i + 10;
+                for (int i = 0; i < enabled.Length; i++)
+                {
+                    var modName = enabled[i];
+                    var counter = i + 10;
 
-                if (Int32.TryParse(modName.Substring(2, 2), out int temp) && modName[4] == '_')
-                {
-                    if (temp != counter)
-                        File.Move(modName, ".\\" + counter.ToString() + "_" + modName.Remove(0, 5));
-                    lbEnabled.Items.Add(modName.Remove(0, 5).Remove(modName.Length - 9));
+                    if (Int32.TryParse(modName.Substring(2, 2), out int temp) && modName[4] == '_')
+                    {
+                        if (temp != counter)
+                            File.Move(modName, ".\\" + counter.ToString() + "_" + modName.Remove(0, 5));
+                        lbEnabled.Items.Add(modName.Remove(0, 5).Remove(modName.Length - 9));
+                    }
+                    else
+                    {
+                        File.Move(modName, ".\\" + counter.ToString() + "_" + modName.Remove(0, 2));
+                        lbEnabled.Items.Add(modName.Remove(0, 2).Remove(modName.Length - 6));
+                    }
                 }
-                else
-                {
-                    File.Move(modName, ".\\" + counter.ToString() + "_" + modName.Remove(0, 2));
-                    lbEnabled.Items.Add(modName.Remove(0, 2).Remove(modName.Length - 6));
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error has occurred while loading installed mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
             }
         }
 
@@ -82,19 +95,26 @@ namespace RI_Mod_Manager
 
             string[] disabled = Directory.GetFiles(".", "*.disabled", SearchOption.TopDirectoryOnly);
 
-            for (int i = 0; i < disabled.Length; i++)
+            try
             {
-                var modName = disabled[i];
+                for (int i = 0; i < disabled.Length; i++)
+                {
+                    var modName = disabled[i];
 
-                if (Int32.TryParse(modName.Substring(2, 2), out int temp) && modName[4] == '_')
-                {
-                    File.Move(modName, ".\\" + modName.Substring(5));
-                    lbDisabled.Items.Add(modName.Remove(0, 5).Remove(modName.Length - 14));
+                    if (Int32.TryParse(modName.Substring(2, 2), out int temp) && modName[4] == '_')
+                    {
+                        File.Move(modName, ".\\" + modName.Substring(5));
+                        lbDisabled.Items.Add(modName.Remove(0, 5).Remove(modName.Length - 14));
+                    }
+                    else
+                    {
+                        lbDisabled.Items.Add(modName.Remove(0, 2).Remove(modName.Length - 11));
+                    }
                 }
-                else
-                {
-                    lbDisabled.Items.Add(modName.Remove(0, 2).Remove(modName.Length - 11));
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error has occurred while loading installed mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
             }
         }
         #endregion
@@ -107,13 +127,20 @@ namespace RI_Mod_Manager
             foreach(string mod in lbEnabled.SelectedItems)
                 selection.Add(mod);
 
-            foreach(string modName in selection)
+            try
             {
-                int index = lbEnabled.Items.IndexOf(modName) + 10;
+                foreach (string modName in selection)
+                {
+                    int index = lbEnabled.Items.IndexOf(modName) + 10;
 
-                File.Move(".\\" + index.ToString() + "_" + modName + ".red", ".\\" + modName + ".disabled");
-                lbDisabled.Items.Add(modName);
-                generateEnabled();
+                    File.Move(".\\" + index.ToString() + "_" + modName + ".red", ".\\" + modName + ".disabled");
+                    lbDisabled.Items.Add(modName);
+                    generateEnabled();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error has occurred while disabling the selected mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
             }
         }
 
@@ -126,11 +153,18 @@ namespace RI_Mod_Manager
             foreach (string mod in lbDisabled.SelectedItems)
                 selection.Add(mod);
 
-            foreach (string modName in selection)
+            try
             {
-                File.Move(".\\" + modName + ".disabled", ".\\" + newIndex.ToString() + "_" + modName + ".red");
-                lbEnabled.Items.Add(modName);
-                lbDisabled.Items.Remove(modName);
+                foreach (string modName in selection)
+                {
+                    File.Move(".\\" + modName + ".disabled", ".\\" + newIndex.ToString() + "_" + modName + ".red");
+                    lbEnabled.Items.Add(modName);
+                    lbDisabled.Items.Remove(modName);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error has occurred while enabling the selected mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
             }
         }
         #endregion
@@ -180,7 +214,7 @@ namespace RI_Mod_Manager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"{ex}");
+                MessageBox.Show($"An error has occurred while updating the game files. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
             }
         }
 
@@ -193,13 +227,14 @@ namespace RI_Mod_Manager
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach (string file in files)
-            {
-                string[] split = file.Split('\\');
-                string fileName = split[split.Length - 1];
 
-                try
+            try
+            {
+                foreach (string file in files)
                 {
+                    string[] split = file.Split('\\');
+                    string fileName = split[split.Length - 1];
+
                     if (fileName.Substring(fileName.Length - 4).ToLower() == ".red")
                     {
                         File.Copy(file, ".\\" + fileName);
@@ -211,10 +246,10 @@ namespace RI_Mod_Manager
                         generateDisabled();
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"An error has occurred while installing your mods: {ex}");
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error has occurred while installing your mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
             }
         }
         #endregion
@@ -228,28 +263,35 @@ namespace RI_Mod_Manager
 
             lbEnabled.ClearSelected();
 
-            foreach (var selecEle in selection)
+            try
             {
-                var selIndex = lbEnabled.Items.IndexOf(selecEle);
-
-                if(selIndex != 0)
+                foreach (var selecEle in selection)
                 {
-                    var uppIndex = selIndex - 1;
-                    var upperEle = lbEnabled.Items[uppIndex];
+                    var selIndex = lbEnabled.Items.IndexOf(selecEle);
 
-                    lbEnabled.Items[selIndex] = upperEle;
-                    lbEnabled.Items[uppIndex] = selecEle;
+                    if (selIndex != 0)
+                    {
+                        var uppIndex = selIndex - 1;
+                        var upperEle = lbEnabled.Items[uppIndex];
 
-                    var upOffset = uppIndex + 10;
-                    var slOffset = selIndex + 10;
+                        lbEnabled.Items[selIndex] = upperEle;
+                        lbEnabled.Items[uppIndex] = selecEle;
 
-                    File.Move(".\\" + upOffset.ToString() + "_" + upperEle + ".red", ".\\" + slOffset.ToString() + "_" + upperEle + ".red");
-                    File.Move(".\\" + slOffset.ToString() + "_" + selecEle + ".red", ".\\" + upOffset.ToString() + "_" + selecEle + ".red");
+                        var upOffset = uppIndex + 10;
+                        var slOffset = selIndex + 10;
+
+                        File.Move(".\\" + upOffset.ToString() + "_" + upperEle + ".red", ".\\" + slOffset.ToString() + "_" + upperEle + ".red");
+                        File.Move(".\\" + slOffset.ToString() + "_" + selecEle + ".red", ".\\" + upOffset.ToString() + "_" + selecEle + ".red");
+                    }
                 }
-            }
 
-            foreach(var selecEle in selection)
-                lbEnabled.SelectedItems.Add(selecEle);
+                foreach (var selecEle in selection)
+                    lbEnabled.SelectedItems.Add(selecEle);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error has occurred while changing mod loading priority. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+            }
         }
 
         private void btnDown_Click(object sender, EventArgs e)
@@ -260,29 +302,36 @@ namespace RI_Mod_Manager
 
             lbEnabled.ClearSelected();
 
-            for(int i = selection.Count - 1; i >= 0; i--)
+            try
             {
-                var selecEle = selection[i];
-                var selIndex = lbEnabled.Items.IndexOf(selecEle);
-
-                if (selIndex != lbEnabled.Items.Count - 1)
+                for (int i = selection.Count - 1; i >= 0; i--)
                 {
-                    var lowIndex = selIndex + 1;
-                    var lowerEle = lbEnabled.Items[lowIndex];
+                    var selecEle = selection[i];
+                    var selIndex = lbEnabled.Items.IndexOf(selecEle);
 
-                    lbEnabled.Items[selIndex] = lowerEle;
-                    lbEnabled.Items[lowIndex] = selecEle;
+                    if (selIndex != lbEnabled.Items.Count - 1)
+                    {
+                        var lowIndex = selIndex + 1;
+                        var lowerEle = lbEnabled.Items[lowIndex];
 
-                    var lwOffset = lowIndex + 10;
-                    var slOffset = selIndex + 10;
+                        lbEnabled.Items[selIndex] = lowerEle;
+                        lbEnabled.Items[lowIndex] = selecEle;
 
-                    File.Move(".\\" + lwOffset.ToString() + "_" + lowerEle + ".red", ".\\" + slOffset.ToString() + "_" + lowerEle + ".red");
-                    File.Move(".\\" + slOffset.ToString() + "_" + selecEle + ".red", ".\\" + lwOffset.ToString() + "_" + selecEle + ".red");
+                        var lwOffset = lowIndex + 10;
+                        var slOffset = selIndex + 10;
+
+                        File.Move(".\\" + lwOffset.ToString() + "_" + lowerEle + ".red", ".\\" + slOffset.ToString() + "_" + lowerEle + ".red");
+                        File.Move(".\\" + slOffset.ToString() + "_" + selecEle + ".red", ".\\" + lwOffset.ToString() + "_" + selecEle + ".red");
+                    }
                 }
-            }
 
-            foreach (var selecEle in selection)
-                lbEnabled.SelectedItems.Add(selecEle);
+                foreach (var selecEle in selection)
+                    lbEnabled.SelectedItems.Add(selecEle);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error has occurred while changing mod loading priority. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+            }
         }
         #endregion
 
@@ -290,34 +339,27 @@ namespace RI_Mod_Manager
         {
             if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                foreach(var modName in lbDisabled.SelectedItems)
+                try
                 {
-                    try
+                    foreach (var modName in lbDisabled.SelectedItems)
                     {
                         File.Delete(".\\" + modName + ".disabled");
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"An error has occurred: {ex}");
-                    }
-                }
 
-                generateDisabled();
+                    generateDisabled();
 
-                foreach (var modName in lbEnabled.SelectedItems)
-                {
-                    try
+                    foreach (var modName in lbEnabled.SelectedItems)
                     {
                         var index = lbEnabled.Items.IndexOf(modName) + 10;
                         File.Delete(".\\" + index.ToString() + "_" + modName + ".red");
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"An error has occurred: {ex}");
-                    }
-                }
 
-                generateEnabled();
+                    generateEnabled();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error has occurred while deleting your mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                }
             }
         }
 
@@ -348,7 +390,7 @@ namespace RI_Mod_Manager
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"An error has occurred while installing your mods: {ex}");
+                        MessageBox.Show($"An error has occurred while installing your mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
                     }
                 }
             }
