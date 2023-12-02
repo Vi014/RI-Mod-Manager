@@ -47,7 +47,7 @@ namespace RI_Mod_Manager
                 }
                 catch
                 {
-                    MessageBox.Show("An error has ocurred while reading the RI game files. You most likely chose the wrong directory as the game install directory. Please try selecting a different directory.");
+                    MessageBox.Show("An error has ocurred while reading the RI game files. You most likely chose the wrong directory as the game install directory. Please try selecting a different directory.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     using (var fbd = new FolderBrowserDialog())
                     {
@@ -95,7 +95,7 @@ namespace RI_Mod_Manager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error has occurred while loading installed mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                MessageBox.Show($"An error has occurred while loading installed mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -124,7 +124,7 @@ namespace RI_Mod_Manager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error has occurred while loading installed mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                MessageBox.Show($"An error has occurred while loading installed mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -150,7 +150,7 @@ namespace RI_Mod_Manager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error has occurred while disabling the selected mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                MessageBox.Show($"An error has occurred while disabling the selected mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -174,7 +174,7 @@ namespace RI_Mod_Manager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error has occurred while enabling the selected mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                MessageBox.Show($"An error has occurred while enabling the selected mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -188,7 +188,7 @@ namespace RI_Mod_Manager
             }
             catch
             {
-                MessageBox.Show("RI executable not found!");
+                MessageBox.Show("RI executable not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -220,13 +220,13 @@ namespace RI_Mod_Manager
                     File.WriteAllLines("data2.dat", lines);
                 }
 
-                MessageBox.Show("Patching done!");
+                MessageBox.Show("Patching done!", "RI Mod Manager", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 btnReviver.Enabled = false;
                 label4.Visible = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error has occurred while updating the game files. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                MessageBox.Show($"An error has occurred while updating the game files. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -261,7 +261,7 @@ namespace RI_Mod_Manager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error has occurred while installing your mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                MessageBox.Show($"An error has occurred while installing your mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -302,7 +302,7 @@ namespace RI_Mod_Manager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error has occurred while changing mod loading priority. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                MessageBox.Show($"An error has occurred while changing mod loading priority. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -342,14 +342,14 @@ namespace RI_Mod_Manager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error has occurred while changing mod loading priority. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                MessageBox.Show($"An error has occurred while changing mod loading priority. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 try
                 {
@@ -370,7 +370,7 @@ namespace RI_Mod_Manager
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"An error has occurred while deleting your mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                    MessageBox.Show($"An error has occurred while deleting your mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -402,7 +402,7 @@ namespace RI_Mod_Manager
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"An error has occurred while installing your mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                        MessageBox.Show($"An error has occurred while installing your mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }

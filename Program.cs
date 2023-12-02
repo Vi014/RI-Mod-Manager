@@ -27,7 +27,7 @@ namespace RI_Mod_Manager
 
             if (!File.Exists(ConfigPath))
             {
-                if (MessageBox.Show("Would you like to select your Ricochet Infinity install directory? If not, the program will assume the directory it's located in is also RI's install directory.", "First launch", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Would you like to select your Ricochet Infinity install directory? If not, the program will assume the directory it's located in is also RI's install directory.", "First launch", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     using (var fbd = new FolderBrowserDialog())
                     {
@@ -59,7 +59,7 @@ namespace RI_Mod_Manager
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"An error has occurred while installing your mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
+                    MessageBox.Show($"An error has occurred while installing your mods. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -76,7 +76,7 @@ namespace RI_Mod_Manager
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"An error has ocurred while saving the settings file. \r\nIf you're running the mod manager inside the Program Files folder, try running it as administrator. \r\n\r\nDetails: \r\n{ex}");
+                MessageBox.Show($"An error has ocurred while saving the settings file. \r\nIf you're running the mod manager inside the Program Files folder, try running it as administrator. \r\n\r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
