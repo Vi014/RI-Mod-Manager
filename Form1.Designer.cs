@@ -45,6 +45,7 @@ namespace RI_Mod_Manager
             this.btnDelete = new System.Windows.Forms.Button();
             this.btnInstall = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.btnCd = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbDisabled
@@ -54,7 +55,7 @@ namespace RI_Mod_Manager
             this.lbDisabled.Name = "lbDisabled";
             this.lbDisabled.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbDisabled.Size = new System.Drawing.Size(320, 355);
-            this.lbDisabled.TabIndex = 0;
+            this.lbDisabled.TabIndex = 1;
             // 
             // lbEnabled
             // 
@@ -63,7 +64,7 @@ namespace RI_Mod_Manager
             this.lbEnabled.Name = "lbEnabled";
             this.lbEnabled.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbEnabled.Size = new System.Drawing.Size(320, 355);
-            this.lbEnabled.TabIndex = 3;
+            this.lbEnabled.TabIndex = 4;
             // 
             // label1
             // 
@@ -88,7 +89,7 @@ namespace RI_Mod_Manager
             this.btnEnable.Location = new System.Drawing.Point(338, 265);
             this.btnEnable.Name = "btnEnable";
             this.btnEnable.Size = new System.Drawing.Size(45, 45);
-            this.btnEnable.TabIndex = 2;
+            this.btnEnable.TabIndex = 3;
             this.btnEnable.Text = ">";
             this.btnEnable.UseVisualStyleBackColor = true;
             this.btnEnable.Click += new System.EventHandler(this.btnEnable_Click);
@@ -98,7 +99,7 @@ namespace RI_Mod_Manager
             this.btnDisable.Location = new System.Drawing.Point(338, 116);
             this.btnDisable.Name = "btnDisable";
             this.btnDisable.Size = new System.Drawing.Size(45, 45);
-            this.btnDisable.TabIndex = 1;
+            this.btnDisable.TabIndex = 2;
             this.btnDisable.Text = "<";
             this.btnDisable.UseVisualStyleBackColor = true;
             this.btnDisable.Click += new System.EventHandler(this.btnDisable_Click);
@@ -108,7 +109,7 @@ namespace RI_Mod_Manager
             this.btnLaunch.Location = new System.Drawing.Point(279, 405);
             this.btnLaunch.Name = "btnLaunch";
             this.btnLaunch.Size = new System.Drawing.Size(75, 23);
-            this.btnLaunch.TabIndex = 7;
+            this.btnLaunch.TabIndex = 8;
             this.btnLaunch.Text = "Launch RI";
             this.btnLaunch.UseVisualStyleBackColor = true;
             this.btnLaunch.Click += new System.EventHandler(this.btnLaunch_Click);
@@ -119,7 +120,7 @@ namespace RI_Mod_Manager
             this.cbClose.Location = new System.Drawing.Point(360, 409);
             this.cbClose.Name = "cbClose";
             this.cbClose.Size = new System.Drawing.Size(128, 17);
-            this.cbClose.TabIndex = 8;
+            this.cbClose.TabIndex = 9;
             this.cbClose.Text = "Close upon launching";
             this.cbClose.UseVisualStyleBackColor = true;
             this.cbClose.CheckedChanged += new System.EventHandler(this.cbClose_CheckedChanged);
@@ -129,7 +130,7 @@ namespace RI_Mod_Manager
             this.btnReviver.Location = new System.Drawing.Point(12, 405);
             this.btnReviver.Name = "btnReviver";
             this.btnReviver.Size = new System.Drawing.Size(97, 23);
-            this.btnReviver.TabIndex = 6;
+            this.btnReviver.TabIndex = 7;
             this.btnReviver.Text = "Revive catalog";
             this.btnReviver.UseVisualStyleBackColor = true;
             this.btnReviver.Click += new System.EventHandler(this.btnReviver_Click);
@@ -139,7 +140,7 @@ namespace RI_Mod_Manager
             this.btnUp.Location = new System.Drawing.Point(716, 116);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(45, 45);
-            this.btnUp.TabIndex = 4;
+            this.btnUp.TabIndex = 5;
             this.btnUp.Text = "/\\";
             this.btnUp.UseVisualStyleBackColor = true;
             this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
@@ -149,7 +150,7 @@ namespace RI_Mod_Manager
             this.btnDown.Location = new System.Drawing.Point(716, 265);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(45, 45);
-            this.btnDown.TabIndex = 5;
+            this.btnDown.TabIndex = 6;
             this.btnDown.Text = "\\/";
             this.btnDown.UseVisualStyleBackColor = true;
             this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
@@ -169,7 +170,7 @@ namespace RI_Mod_Manager
             this.btnDelete.Location = new System.Drawing.Point(636, 405);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(125, 23);
-            this.btnDelete.TabIndex = 10;
+            this.btnDelete.TabIndex = 11;
             this.btnDelete.Text = "Delete selected mods";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -179,7 +180,7 @@ namespace RI_Mod_Manager
             this.btnInstall.Location = new System.Drawing.Point(536, 405);
             this.btnInstall.Name = "btnInstall";
             this.btnInstall.Size = new System.Drawing.Size(94, 23);
-            this.btnInstall.TabIndex = 9;
+            this.btnInstall.TabIndex = 10;
             this.btnInstall.Text = "Install new mod";
             this.btnInstall.UseVisualStyleBackColor = true;
             this.btnInstall.Click += new System.EventHandler(this.btnInstall_Click);
@@ -194,12 +195,23 @@ namespace RI_Mod_Manager
             this.label4.Text = "Catalog already patched.";
             this.label4.Visible = false;
             // 
+            // btnCd
+            // 
+            this.btnCd.Location = new System.Drawing.Point(619, 13);
+            this.btnCd.Name = "btnCd";
+            this.btnCd.Size = new System.Drawing.Size(139, 23);
+            this.btnCd.TabIndex = 0;
+            this.btnCd.Text = "Change working directory";
+            this.btnCd.UseVisualStyleBackColor = true;
+            this.btnCd.Click += new System.EventHandler(this.btnCd_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 437);
+            this.Controls.Add(this.btnCd);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnInstall);
             this.Controls.Add(this.btnDelete);
@@ -245,6 +257,7 @@ namespace RI_Mod_Manager
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnInstall;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnCd;
     }
 }
 

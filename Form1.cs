@@ -11,6 +11,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Net;
 using System.Reflection;
+using Newtonsoft.Json;
 
 namespace RI_Mod_Manager
 {
@@ -24,36 +25,45 @@ namespace RI_Mod_Manager
         #region startup
         private void Form1_Load(object sender, EventArgs e)
         {
+            cbClose.Checked = Program.ProgramSettings.CloseOnLaunch;
+
+            checkDirAndPatched();
             generateEnabled();
             generateDisabled();
+        }
 
+        private void checkDirAndPatched()
+        {
+            bool readSuccess = false, patched = false;
 
+            while (!readSuccess)
+            {
+                try
+                {
+                    foreach (var line in File.ReadAllLines("data2.dat"))
+                        if (line == "Catalog URL=https://www.ricochetuniverse.com/gateway/catalog.php" || line == "Catalog URL=http://www.ricochetuniverse.com/gateway/catalog.php")
+                            patched = true;
+                    readSuccess = true;
+                }
+                catch
+                {
+                    MessageBox.Show("An error has ocurred while reading the RI game files. You most likely chose the wrong directory as the game install directory. Please try selecting a different directory.");
 
-            var patched = false;
+                    using (var fbd = new FolderBrowserDialog())
+                    {
+                        if (fbd.ShowDialog() == DialogResult.OK)
+                        {
+                            Program.ProgramSettings.InstallPath = Environment.CurrentDirectory = fbd.SelectedPath;
+                            File.WriteAllText(Program.ConfigPath, JsonConvert.SerializeObject(Program.ProgramSettings, Formatting.Indented));
+                        }
+                    }
+                }
+            }
 
-            foreach (var line in File.ReadAllLines("data2.dat"))
-                if (line == "Catalog URL=https://www.ricochetuniverse.com/gateway/catalog.php" || line == "Catalog URL=http://www.ricochetuniverse.com/gateway/catalog.php")
-                    patched = true;
-
-            if(patched)
+            if (patched)
             {
                 btnReviver.Enabled = false;
                 label4.Visible = true;
-            }
-
-
-
-            try
-            {
-                if (File.Exists("modmanager.cfg"))
-                    if (File.ReadAllText("modmanager.cfg") == "y")
-                        cbClose.Checked = true;
-                    else
-                        File.AppendAllText("modmanager.cfg", "n");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error has occurred while loading the program's settings. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}");
             }
         }
 
@@ -211,6 +221,8 @@ namespace RI_Mod_Manager
                 }
 
                 MessageBox.Show("Patching done!");
+                btnReviver.Enabled = false;
+                label4.Visible = true;
             }
             catch (Exception ex)
             {
@@ -398,8 +410,24 @@ namespace RI_Mod_Manager
 
         private void cbClose_CheckedChanged(object sender, EventArgs e)
         {
-            if (cbClose.Checked) File.WriteAllText("modmanager.cfg", "y");
-            else File.WriteAllText("modmanager.cfg", "n");
+            Program.ProgramSettings.CloseOnLaunch = cbClose.Checked;
+            File.WriteAllText(Program.ConfigPath, JsonConvert.SerializeObject(Program.ProgramSettings, Formatting.Indented));
+        }
+
+        private void btnCd_Click(object sender, EventArgs e)
+        {
+            using (var fbd = new FolderBrowserDialog())
+            {
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    Program.ProgramSettings.InstallPath = Environment.CurrentDirectory = fbd.SelectedPath;
+                    File.WriteAllText(Program.ConfigPath, JsonConvert.SerializeObject(Program.ProgramSettings, Formatting.Indented));
+                }
+            }
+
+            checkDirAndPatched();
+            generateEnabled();
+            generateDisabled();
         }
     }
 }
