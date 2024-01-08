@@ -429,5 +429,17 @@ namespace RI_Mod_Manager
             generateEnabled();
             generateDisabled();
         }
+
+        private void btnOpenFolder_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start($"{Program.ProgramSettings.InstallPath}");
+            }
+            catch
+            {
+                MessageBox.Show("Unable to open RI folder", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
