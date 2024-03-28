@@ -47,6 +47,7 @@ namespace RI_Mod_Manager
             this.label4 = new System.Windows.Forms.Label();
             this.btnCd = new System.Windows.Forms.Button();
             this.btnOpenFolder = new System.Windows.Forms.Button();
+            this.cbFullscreen = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // lbDisabled
@@ -118,7 +119,7 @@ namespace RI_Mod_Manager
             // cbClose
             // 
             this.cbClose.AutoSize = true;
-            this.cbClose.Location = new System.Drawing.Point(360, 409);
+            this.cbClose.Location = new System.Drawing.Point(360, 402);
             this.cbClose.Name = "cbClose";
             this.cbClose.Size = new System.Drawing.Size(128, 17);
             this.cbClose.TabIndex = 10;
@@ -171,7 +172,7 @@ namespace RI_Mod_Manager
             this.btnDelete.Location = new System.Drawing.Point(636, 405);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(125, 23);
-            this.btnDelete.TabIndex = 12;
+            this.btnDelete.TabIndex = 13;
             this.btnDelete.Text = "Delete selected mods";
             this.btnDelete.UseVisualStyleBackColor = true;
             this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
@@ -181,7 +182,7 @@ namespace RI_Mod_Manager
             this.btnInstall.Location = new System.Drawing.Point(536, 405);
             this.btnInstall.Name = "btnInstall";
             this.btnInstall.Size = new System.Drawing.Size(94, 23);
-            this.btnInstall.TabIndex = 11;
+            this.btnInstall.TabIndex = 12;
             this.btnInstall.Text = "Install new mod";
             this.btnInstall.UseVisualStyleBackColor = true;
             this.btnInstall.Click += new System.EventHandler(this.btnInstall_Click);
@@ -216,12 +217,24 @@ namespace RI_Mod_Manager
             this.btnOpenFolder.UseVisualStyleBackColor = true;
             this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
             // 
+            // cbFullscreen
+            // 
+            this.cbFullscreen.AutoSize = true;
+            this.cbFullscreen.Location = new System.Drawing.Point(360, 420);
+            this.cbFullscreen.Name = "cbFullscreen";
+            this.cbFullscreen.Size = new System.Drawing.Size(121, 17);
+            this.cbFullscreen.TabIndex = 11;
+            this.cbFullscreen.Text = "Launch in fullscreen";
+            this.cbFullscreen.UseVisualStyleBackColor = true;
+            this.cbFullscreen.CheckedChanged += new System.EventHandler(this.cbFullscreen_CheckedChanged);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 437);
+            this.Controls.Add(this.cbFullscreen);
             this.Controls.Add(this.btnOpenFolder);
             this.Controls.Add(this.btnCd);
             this.Controls.Add(this.label4);
@@ -271,6 +284,7 @@ namespace RI_Mod_Manager
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnCd;
         private System.Windows.Forms.Button btnOpenFolder;
+        private System.Windows.Forms.CheckBox cbFullscreen;
     }
 }
 

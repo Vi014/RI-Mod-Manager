@@ -34,7 +34,7 @@ namespace RI_Mod_Manager
 
         private void checkDirAndPatched()
         {
-            bool readSuccess = false, patched = false;
+            bool readSuccess = false, patched = false, fullscreen = false;
 
             while (!readSuccess)
             {
@@ -43,6 +43,11 @@ namespace RI_Mod_Manager
                     foreach (var line in File.ReadAllLines("data2.dat"))
                         if (line == "Catalog URL=https://www.ricochetuniverse.com/gateway/catalog.php" || line == "Catalog URL=http://www.ricochetuniverse.com/gateway/catalog.php")
                             patched = true;
+
+                    foreach (var line in File.ReadAllLines("Ricochet Infinity.CFG"))
+                        if (line == "Full Screen=1")
+                            fullscreen = true;
+
                     readSuccess = true;
                 }
                 catch
@@ -65,6 +70,8 @@ namespace RI_Mod_Manager
                 btnReviver.Enabled = false;
                 label4.Visible = true;
             }
+
+            cbFullscreen.Checked = fullscreen;
         }
 
         private void generateEnabled()
@@ -347,6 +354,7 @@ namespace RI_Mod_Manager
         }
         #endregion
 
+        #region delete and install
         private void btnDelete_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Are you sure?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -407,11 +415,31 @@ namespace RI_Mod_Manager
                 }
             }
         }
+        #endregion
 
         private void cbClose_CheckedChanged(object sender, EventArgs e)
         {
             Program.ProgramSettings.CloseOnLaunch = cbClose.Checked;
             File.WriteAllText(Program.ConfigPath, JsonConvert.SerializeObject(Program.ProgramSettings, Formatting.Indented));
+        }
+
+        private void cbFullscreen_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines("Ricochet Infinity.CFG");
+
+                for (int i = 0; i < lines.Length; i++)
+                    if (lines[i].Length >= 11)
+                        if (lines[i].Substring(0, 11) == "Full Screen")
+                            lines[i] = "Full Screen=" + (cbFullscreen.Checked ? "1" : "0");
+
+                File.WriteAllLines("Ricochet Infinity.CFG", lines);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error has occurred while updating the game files. \r\nIf you have the game installed in the Program Files folder, try running the mod manager as administrator. \r\n \r\nDetails: \r\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnCd_Click(object sender, EventArgs e)
